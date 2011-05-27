@@ -6,7 +6,7 @@ Markdown -> LaTeX. Very alpha.
 
     lein run <filename>
 
-    or
+or
 
     lein uberjar
     java -jar latex-md-1.0.0-SNAPSHOT-standalone.jar <filename>
