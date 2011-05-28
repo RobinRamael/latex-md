@@ -20,8 +20,6 @@
   (str "\\begin{" tag "}" \newline  s \newline "\\end{" tag "}"))
 
 
-
-
 (defn as-latex [tree]
   (join \newline
 	(map #(let [[k v] %
@@ -40,6 +38,7 @@
      {:h1 #(str "\\section{" % "}")
       :h2 #(str "\\subsection{" % "}")
       :h3 #(str "\\subsubsection{" % "}")
-      :code #(between-tags "lstlisting" %)
+      :code #(between-tags "lstlisting" (as-latex %))
       :quoted #(between-tags "quote" (as-latex %))
-      :text #(str % "\\\\")})
+      :text #(str % "\\\\")
+      :raw #(str %)})

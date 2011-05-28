@@ -8,7 +8,7 @@
   (cond
    (empty? (first lines))  [s (rest lines)] 
    :else (divide-one (apply str
-			    (when (not (empty? s))
+			    (when (not (empty? (trim s)))
 			      (str s \newline))
 			    (first lines))
 		     (rest lines))))
@@ -27,14 +27,21 @@
 	(parse-one (rest arch) s)
 	res))))
 
-(defn parse [ls]
-  (map #(parse-one grammar %) (divide ls)))
 
+(defn parse-block [ls]
+  (map #(parse-one grammar %) ls))
+
+(defn parse [ls]
+  (parse-block (divide ls)))
 
 ;; parts
 
 (defn- fst-char? [s c]
   (= (first (trim s)) c))
+
+(defn raw [s]
+  (vector :raw
+	  s))
 
 (defn text [s]
   (vector :text
@@ -49,14 +56,15 @@
 
 (defn sourcecode [s]
   (when (.startsWith s "    ")
-    (vector :code  (trim s))))
+    (vector :code
+	    (map #(raw (trim %)) (split s #"\n")))))
 
 
 (defn quoted-text [s]
   (when (fst-char? s \>)
     (vector :quoted
 	    (parse (map #(apply str (rest (trimr %)))
-			       (split s #"\n"))))))
+			(split s #"\n"))))))
 
 (def grammar (list header
 		   sourcecode

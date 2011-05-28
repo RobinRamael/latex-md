@@ -22,3 +22,4 @@ dog's back.
 ### Some Code
 
     (map inc (range))
+    (reduce awesomeness bear)
