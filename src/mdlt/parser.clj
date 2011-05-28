@@ -1,5 +1,5 @@
 (ns mdlt.parser
-  (:use [clojure.string :only (split trim trimr)]))
+  (:use [clojure.string :only (split trim trimr join)]))
 
 (declare grammar)
 
@@ -45,8 +45,7 @@
 
 (defn text [s]
   (vector :text
-	  (trim (apply str
-		  (map #(if (= \newline %) \space %) s)))))
+	  (join \space (map trim (split s #"\n")))))
 
 (defn header [s]
   (let [header-level (count (first (split (trim s) #"[^#]")))]
