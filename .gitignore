@@ -5,5 +5,7 @@ pom.xml
 .lein-deps-sum
 *.pdf
 *.tex
+!resources/before.tex
+!resources/after.tex
 *.log
 *.aux

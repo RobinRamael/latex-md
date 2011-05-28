@@ -2,8 +2,10 @@
   (:use [clojure.contrib.duck-streams :only (read-lines)]
 	[clojure.pprint :only (pprint)]
 	[mdlt.parser :only (parse)]
-	[mdlt.generator :only (latex)])
+	[mdlt.generator :only (latex)]
+	[clojure.java.io :only (resource)])
   (:gen-class))
 
 (defn -main [& args]
+;  (println (slurp (resource "before.tex")))
   (println (latex (parse (read-lines (first args))))))

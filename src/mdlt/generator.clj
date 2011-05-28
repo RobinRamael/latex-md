@@ -1,20 +1,8 @@
 (ns mdlt.generator
-  (:use [clojure.string :only (join)]))
+  (:use [clojure.string :only (join)]
+	  [clojure.java.io :only (resource)]))
 
 (declare target-grammar)
-
-
-(def latex-header
-     "\\documentclass[]{article}
-\\usepackage[utf8]{inputenc}
-\\usepackage{listings}
-\\usepackage[pdftex]{graphicx}
-
-\\begin{document}
-")
-
-(def latex-footer "
-\\end{document}")
 
 (defn between-tags [tag s]
   (str "\\begin{" tag "}" \newline  s \newline "\\end{" tag "}"))
@@ -30,9 +18,9 @@
 	     tree)))
 
 (defn latex [tree]
-     (str latex-header
+  (str (slurp (resource "before.tex"))
        (as-latex tree)
-       latex-footer))
+       (slurp (resource "after.tex"))))
 
 (def target-grammar
      {:h1 #(str "\\section{" % "}")
