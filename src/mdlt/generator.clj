@@ -31,7 +31,7 @@
 		  (f v)))
 	     tree)))
 
-(defn generate-latex-file [tree]
+(defn latex [tree]
      (str latex-header
        (as-latex tree)
        latex-footer))
