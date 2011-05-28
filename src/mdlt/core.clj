@@ -6,4 +6,4 @@
   (:gen-class))
 
 (defn -main [& args]
-  (print (latex (parse (read-lines (first args))))))
+  (println (latex (parse (read-lines (first args))))))
