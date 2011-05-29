@@ -17,7 +17,7 @@
     (let [f (first remaining)]
       (if f
 	(try (let [lines  (read-lines f)]
-	       (latex (parse lines) {:numbered numbered?}))
+	       (println (latex (parse lines) {:numbered numbered?})))
 	     (catch java.io.FileNotFoundException e
 	       (error-out "File" f "not found.")))
 	(error-out "No file specified.")))))
