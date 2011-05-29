@@ -12,12 +12,14 @@
 (defn -main [& args]
   (with-command-line args
     "latex-md: Generate latex from markdown."
-    [remaining]
+    [[numbered? n? "Output numbered headers."]
+     remaining]
     (let [f (first remaining)]
       (if f
 	(try (let [lines  (read-lines f)]
-	       (println (latex (parse lines))))
-	     (catch java.io.FileNotFoundException e (error-out "File" f "not found.")))
+	       (latex (parse lines) {:numbered numbered?}))
+	     (catch java.io.FileNotFoundException e
+	       (error-out "File" f "not found.")))
 	(error-out "No file specified.")))))
 
 
