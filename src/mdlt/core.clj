@@ -3,9 +3,24 @@
 	[clojure.pprint :only (pprint)]
 	[mdlt.parser :only (parse)]
 	[mdlt.generator :only (latex)]
-	[clojure.java.io :only (resource)])
+	[clojure.java.io :only (resource)]
+	[clojure.contrib.command-line :only (with-command-line)])
   (:gen-class))
 
+(declare error-out)
+
 (defn -main [& args]
-;  (println (slurp (resource "before.tex")))
-  (println (latex (parse (read-lines (first args))))))
+  (with-command-line args
+    "latex-md: Generate latex from markdown."
+    [remaining]
+    (let [f (first remaining)]
+      (if f
+	(try (let [lines  (read-lines f)]
+	       (println (latex (parse lines))))
+	     (catch java.io.FileNotFoundException e (error-out "File" f "not found.")))
+	(error-out "No file specified.")))))
+
+
+(defn error-out [& s]
+  (binding [*out* *err*]
+    (apply println s)))
