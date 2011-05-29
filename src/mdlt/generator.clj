@@ -37,5 +37,5 @@
       :h3 #(gen-header %1 3 (:numbered %2))
       :code (fn [s opts] (between-tags "lstlisting" (as-latex s opts)))
       :quoted (fn [s opts] (between-tags "quote" (as-latex s opts)))
-      :text (fn [s opts] (str s "\\\\"))
+      :text (fn [s opts] (if (empty? s) s (str s "\\\\")))
       :raw (fn [s opts] (str s))})
